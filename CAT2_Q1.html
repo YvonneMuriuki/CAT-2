@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Employee Pay Calculator</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Employee Pay Calculator</h1>
+    <form id="payForm">
+      <label for="employeeName">Employee Name:</label>
+      <input type="text" id="employeeName" required>
+
+      <label for="hoursWorked">Hours Worked:</label>
+      <input type="number" id="hoursWorked" required>
+
+      <label for="ratePerHour">Rate per Hour (in $):</label>
+      <input type="number" id="ratePerHour" required step="any">
+
+      <button type="button" onclick="calculatePay()">Calculate Pay</button>
+    </form>
+
+    <div id="results">
+      <!-- Results will be displayed here -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+function calculatePay() {
+  // Get input values
+  var name = document.getElementById('employeeName').value;
+  var hoursWorked = parseFloat(document.getElementById('hoursWorked').value);
+  var ratePerHour = parseFloat(document.getElementById('ratePerHour').value);
+
+  // Calculate basic pay
+  var basicPay = hoursWorked * ratePerHour;
+
+  // Calculate tax based on basic pay
+  var tax;
+  if (basicPay > 50000) {
+    tax = 0.2 * basicPay;
+  } else if (basicPay > 20000) {
+    tax = 0.1 * basicPay;
+  } else {
+    tax = 0;
+  }
+
+  // Calculate net pay
+  var netPay = basicPay - tax;
+
+  // Display results
+  var results = document.getElementById('results');
+  results.innerHTML = `
+    <h2>Pay Slip for ${name}</h2>
+    <p><strong>Basic Pay:</strong> $${basicPay.toFixed(2)}</p>
+    <p><strong>Tax:</strong> $${tax.toFixed(2)}</p>
+    <p><strong>Net Pay:</strong> $${netPay.toFixed(2)}</p>
+  `;
+}
+</body>
+</html>
